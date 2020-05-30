@@ -1,22 +1,59 @@
 import time
 
+class BinarySearchTree:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    def insert(self, value):
+        if self.value < value:
+            if self.right is None:
+                self.right = BinarySearchTree(value)
+            else:
+                self.right.insert(value)
+        elif self.value >= value:
+            if self.left is None:
+                self.left = BinarySearchTree(value)
+            else:
+                self.left.insert(value)
+
+    def contains(self, target):
+        if target == self.value:
+            return True
+        elif self.right and self.value < target:
+            return self.right.contains(target)
+        elif self.left and self.value > target:
+            return self.left.contains(target)
+        else:
+            return False
+
+
 start_time = time.time()
 
-f = open('names_1.txt', 'r')
+f = open('C:/Users/oscar/Desktop/python-stuff/Sprint-Challenge--Data-Structures-Python/names/names_1.txt', 'r')
 names_1 = f.read().split("\n")  # List containing 10000 names
 f.close()
 
-f = open('names_2.txt', 'r')
+f = open('C:/Users/oscar/Desktop/python-stuff/Sprint-Challenge--Data-Structures-Python/names/names_2.txt', 'r')
 names_2 = f.read().split("\n")  # List containing 10000 names
 f.close()
 
 duplicates = []  # Return the list of duplicates in this data structure
 
 # Replace the nested for loops below with your improvements
-for name_1 in names_1:
-    for name_2 in names_2:
-        if name_1 == name_2:
-            duplicates.append(name_1)
+# for name_1 in names_1:
+#     for name_2 in names_2:
+#         if name_1 == name_2:
+#             duplicates.append(name_1)
+
+tree = BinarySearchTree(names_1[0])
+for i in range(1, len(names_1)):
+    tree.insert(names_1[i])
+
+for i in names_2:
+    if tree.contains(i):
+        duplicates.append(i)
 
 end_time = time.time()
 print (f"{len(duplicates)} duplicates:\n\n{', '.join(duplicates)}\n\n")
