@@ -28,20 +28,6 @@ class BinarySearchTree:
         else:
             return False
 
-    def get_max(self):
-        if self.right != None:
-            return self.right.get_max()
-        else:
-            return self.value
-
-    def for_each(self, cb):
-        cb(self.value)
-
-        if self.left != None:
-            self.left.for_each(cb)
-
-        if self.right != None:
-            self.right.for_each(cb)
 
 start_time = time.time()
 
